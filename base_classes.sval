@@ -1,0 +1,62 @@
+<loader>ClassChanger::AddClass</loader>
+<array>
+	<dict>
+		<string name="class-id">paladin</string>
+		<int name="ore-price">20</int>
+		<array name="flags"></array>
+	</dict>
+	<dict>
+		<string name="class-id">ranger</string>
+		<int name="ore-price">20</int>
+		<array name="flags"></array>
+	</dict>
+	<dict>
+		<string name="class-id">sorcerer</string>
+		<int name="ore-price">20</int>
+		<array name="flags"></array>
+	</dict>
+	<dict>
+		<string name="class-id">warlock</string>
+		<int name="ore-price">20</int>
+		<array name="flags"></array>
+	</dict>
+	<dict>
+		<string name="class-id">thief</string>
+		<int name="ore-price">20</int>
+		<array name="flags">
+			<string>tavern</string>
+			<int>1</int>
+		</array>
+	</dict>
+	<dict>
+		<string name="class-id">priest</string>
+		<int name="ore-price">20</int>
+		<array name="flags">
+			<string>chapel</string>
+			<int>1</int>
+		</array>
+	</dict>
+	<dict>
+		<string name="class-id">wizard</string>
+		<int name="ore-price">20</int>
+		<array name="flags">
+			<string>magicshop</string>
+			<int>1</int>
+		</array>
+	</dict>
+	<dict>
+		<string name="class-id">gladiator</string>
+		<int name="ore-price">20</int>
+		<array name="flags">
+			<string>unlock_gladiator</string>
+			<string>pop</string>
+		</array>
+	</dict>
+	<dict>
+		<string name="class-id">witch_hunter</string>
+		<int name="ore-price">20</int>
+		<array name="flags">
+			<string>wh</string>
+		</array>
+	</dict>
+</array>
