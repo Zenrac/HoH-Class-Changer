@@ -49,6 +49,18 @@ namespace ClassChanger
 		return id;
 	}
 
+	int GetOrePrice(string classID)
+	{
+		int oreCost = 0;
+		for (uint i = 0; i < g_classes.length(); i++){
+			auto currentClass = g_classes[i];
+			if (currentClass.m_id == classID)
+				oreCost = currentClass.m_orePrice;
+		}
+		return oreCost;
+	}
+
+
 	array<ClassEntry@> g_classes;
 	ClassChangerMenuContent@ g_menu;
 
@@ -58,7 +70,7 @@ namespace ClassChanger
 		{	
 			auto svClass = arrClasses[i];
 			auto newClass = cast<ClassEntry>(InstantiateClass("ClassChanger::ClassEntry", UnitPtr(), svClass));
-			print("loading \"" + newClass.m_name + "\"");
+			print("loading \"" + newClass.m_name + "\" class");
 			if (newClass is null){
 				PrintError("The " + newClass.m_name + "class is causing a problem");
 				continue;

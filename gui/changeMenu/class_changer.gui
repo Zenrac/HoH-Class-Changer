@@ -57,17 +57,17 @@
 					<rect width="3" height="28" offset="104 4" spriteset="gui/variable/3pxbar_vert.sval" />
 
 					<!-- Name -->
-					<rect width="271" height="28" offset="50 4" spriteset="gui/variable/block_borders.sval">
+					<rect id="name-container" width="271" height="28" offset="50 4" spriteset="gui/variable/block_borders.sval">
 						<text id="name" font="gui/fonts/arial11.fnt" text="Custom Class" anchor="0.5 0.5" />	
 					</rect>
 
 					<!-- Unlock -->
-					<scalebutton id="button-unlock" func="unlock-class" spriteset="scalebutton" width="22" offset="325 9" text=".mod.classchanger.menu.unlock">
+					<scalebutton id="button-unlock" func="unlock" spriteset="scalebutton" width="22" offset="325 9" text=".mod.classchanger.menu.unlock">
 						<sprite src="ore" anchor="0.5 0.5" />
 					</scalebutton>
 
 					<!-- Buy -->
-					<scalebutton id="button-buy" func="buy-class" spriteset="scalebutton" width="22" offset="354 9" text=".mod.classchanger.menu.buy">
+					<scalebutton id="button-buy" func="train" spriteset="scalebutton" width="22" offset="354 9" text=".mod.classchanger.menu.buy">
 						<sprite src="gold" anchor="0.5 0.5" />
 					</scalebutton>
 

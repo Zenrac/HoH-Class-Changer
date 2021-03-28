@@ -1,6 +1,8 @@
 <lang>
     <string name="mod.classchanger.menu.title">Class Changer</string>
-    <string name="mod.classchanger.menu.unlock">Unlock Class: %ore% Ore</string>
-    <string name="mod.classchanger.menu.buy">Train Character: %cost% Gold</string>
+    <string name="mod.classchanger.menu.unlock">Unlock</string>
+    <string name="mod.classchanger.menu.unlock.desc">Unlock Class: %ore% Ore</string>
+    <string name="mod.classchanger.menu.buy">Train</string>
+    <string name="mod.classchanger.menu.buy.desc">Train Character: %cost% Gold</string>
     <string name="mod.classchanger.menu.prompt">This action is IRRIVERSABLE, are you sure you want to change classes?\nSkill points will be refunded.</string>
 </lang>
