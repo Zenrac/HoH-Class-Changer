@@ -13,81 +13,73 @@
 		<sprite name="gold" texture="gui/icons.png"><frame>0 11 9 10</frame></sprite>
 		<sprite name="ore" texture="gui/icons.png"><frame>8 0 10 10</frame></sprite>
 
-		<sprite name="char-shadow" texture="gui/widget.png"><frame>99 118 12 12</frame></sprite>
-
-		<sprite name="merc-small-left" texture="gui/widget.png"><frame>378 24 7 24</frame></sprite>
-		<sprite name="merc-small-right" texture="gui/widget.png"><frame>385 24 6 24</frame></sprite>
-
-		<sprite name="merc-left" texture="gui/widget.png"><frame>211 72 14 24</frame></sprite>
-		<sprite name="merc-right" texture="gui/widget.png"><frame>225 72 13 24</frame></sprite>
-
 %include "gui/scalablebutton_sprites.inc"
 %include "gui/closebutton_sprites.inc"
 %include "gui/scrollbar_sprites.inc"
 	</sprites>
 
 	<doc>
-		<group><group id="menu">
-			<rect width="400" height="184" anchor="0.5 0.5" spriteset="gui/variable/bigwindow_borders.sval">
-				<!-- Header -->
-				<rect width="396" height="18" offset="2 2" flow="hbox">
-					<!-- Text -->
-					<rect width="375" height="18" spriteset="gui/variable/headline_borders.sval">
-						<text anchor="0.5 0.5" font="gui/fonts/arial11_bold.fnt" text=".mod.classchanger.menu.title" />
-					</rect>
-
-					<!-- Separator -->
-					<rect width="3" height="18" spriteset="gui/variable/3pxbar_vert.sval" />
-
-					<!-- Close button -->
-					<spritebutton func="back" spriteset="close" />
+		<rect width="400" height="208" inner="true" anchor="0.5 0.5" spriteset="gui/variable/bigwindow_borders.sval">
+			<!-- Header -->
+			<rect width="396" height="18" offset="2 2" flow="hbox">
+				<!-- Text -->
+				<rect width="375" height="18" spriteset="gui/variable/headline_borders.sval">
+					<text anchor="0.5 0.5" font="gui/fonts/arial11_bold.fnt" text=".mod.classchanger.menu.title" />
 				</rect>
 
 				<!-- Separator -->
-				<rect offset="2 20" width="396" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+				<rect width="3" height="18" spriteset="gui/variable/3pxbar_vert.sval" />
 
-				<!-- Template -->
-				<rect id="template" width="382" height="36" visible="false">
-
-					<!-- Portrait -->
-					<portrait id="portrait" offset="11 4" />
-					<sprite src="box" offset="11 4" />
-
-					<!-- Separator -->
-					<rect width="3" height="28" offset="104 4" spriteset="gui/variable/3pxbar_vert.sval" />
-
-					<!-- Name -->
-					<rect id="name-container" width="271" height="28" offset="50 4" spriteset="gui/variable/block_borders.sval">
-						<text id="name" font="gui/fonts/arial11.fnt" text="Custom Class" anchor="0.5 0.5" />	
-					</rect>
-
-					<!-- Unlock -->
-					<scalebutton id="button-unlock" func="unlock" spriteset="scalebutton" width="22" offset="325 9" text=".mod.classchanger.menu.unlock">
-						<sprite src="ore" anchor="0.5 0.5" />
-					</scalebutton>
-
-					<!-- Buy -->
-					<scalebutton id="button-buy" func="train" spriteset="scalebutton" width="22" offset="354 9" text=".mod.classchanger.menu.buy">
-						<sprite src="gold" anchor="0.5 0.5" />
-					</scalebutton>
-
-					<!-- Separator -->
-					<rect width="382" height="3" offset="0 36" spriteset="gui/variable/3pxbar_hor.sval" />
-				</rect>
-
-				<!-- List container -->
-				<rect offset="2 23" width="396" height="158" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
-					<!-- List -->
-					<checkboxgroup id="list" flow="vbox" spacing="3" dynamic-size="false" width="382" height="158" clipping="true" />
-
-					<!-- Scrollbar -->
-					<scrollbar forid="list" spriteset="scrollbar" outside="true" offset="3 0" buttons-size="14" trough-offset="18" handle-border="2" />
-
-					<!-- Separators -->
-					<rect width="3" height="158" offset="382 0" spriteset="gui/variable/3pxbar_vert.sval" />
-					<rect width="3" height="158" offset="393 0" spriteset="gui/variable/3pxbar_vert.sval" />
-				</rect>
+				<!-- Close button -->
+				<spritebutton func="close" spriteset="close" />
 			</rect>
-		</group></group>
+			<!-- List container -->
+			<rect offset="2 22" width="396" height="184" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
+				<!-- List -->
+				<checkboxgroup id="list" flow="vbox" spacing="2" dynamic-size="false" width="382" height="184" clipping="true" />
+
+				<!-- Scrollbar -->
+				<scrollbar forid="list" spriteset="scrollbar" outside="true" offset="3 0" buttons-size="14" trough-offset="18" handle-border="2" />
+
+				<!-- Separators -->
+				<rect width="3" height="184" offset="382 0" spriteset="gui/variable/3pxbar_vert.sval" />
+				<rect width="3" height="184" offset="393 0" spriteset="gui/variable/3pxbar_vert.sval" />
+			</rect>
+			<!-- Separator -->
+			<rect offset="2 20" width="396" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
+			
+			<!-- Bottom bar -->
+			<rect offset="0 207" width="286" height="18" flow="hbox">
+				<rect width="400" height="18" spriteset="gui/variable/headline_hor.sval" />
+			</rect>
+			<!-- Template -->
+			<rect id="template" width="382" height="36" visible="false">
+			
+				<!-- Separator -->
+				<rect width="3" height="28" offset="104 4" spriteset="gui/variable/3pxbar_vert.sval" />
+
+				<!-- Portrait -->
+				<portrait id="portrait" offset="11 4" />
+				<sprite src="box" offset="11 4" />
+				
+				<!-- Name -->
+				<rect id="name-container" width="271" height="28" offset="50 4" spriteset="gui/variable/block_borders.sval">
+					<text id="name" font="gui/fonts/arial11.fnt" text="Custom Class" anchor="0.5 0.5" />	
+				</rect>
+
+				<!-- Unlock -->
+				<scalebutton id="button-unlock" func="unlock" spriteset="scalebutton" width="22" offset="325 9" text=".mod.classchanger.menu.unlock">
+					<sprite src="ore" anchor="0.5 0.5" />
+				</scalebutton>
+
+				<!-- Buy -->
+				<scalebutton id="button-buy" func="train" spriteset="scalebutton" width="22" offset="354 9" text=".mod.classchanger.menu.buy">
+					<sprite src="gold" anchor="0.5 0.5" />
+				</scalebutton>
+
+				<!-- Separator -->
+				<rect width="382" height="3" offset="0 36" spriteset="gui/variable/3pxbar_hor.sval" />
+			</rect>	
+		</rect>
 	</doc>
 </gui>

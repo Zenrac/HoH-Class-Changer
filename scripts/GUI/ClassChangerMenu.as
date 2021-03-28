@@ -48,9 +48,9 @@ namespace ClassChanger
 				//Portrait Widget
 				auto wPortrait = cast<PortraitWidget>(wNewClass.GetWidgetById("portrait"));
 				auto portraitData = GetLocalPlayerRecord();
-				portraitData.charClass = customClass.m_id;
 				if (wPortrait !is null)
 					wPortrait.BindRecord(portraitData);
+					wPortrait.SetClass(customClass.m_id);
 
 				//Name Widget
 				auto wNameContainer = cast<RectWidget>(wNewClass.GetWidgetById("name-container"));
@@ -63,35 +63,35 @@ namespace ClassChanger
 						if (customClass.m_name != "")
 							wName.SetText(customClass.m_name);
 						else
-							wName.SetText( "Undefined Class");
+							wName.SetText("Undefined Class");
 						
 					}
 				}
 				
 				//Check Flags
-				if (customClass.m_flags !is null)
+				if (customClass.m_flags.length() > 0)
 				{
 					requiredFlags = false;
 					for (uint j = 0; j < customClass.m_flags.length(); j++){
 						auto currentFlag = customClass.m_flags[j];
+						auto parseFlag = currentFlag.split(",");
 						print(currentFlag);
-						if (currentFlag == "apothecary" || currentFlag == "blacksmith" || currentFlag == "chapel" || currentFlag == "fountain" 
+						if (parseFlag[0] == "apothecary" || currentFlag == "blacksmith" || currentFlag == "chapel" || currentFlag == "fountain" 
 							|| currentFlag == "generalstore" || currentFlag == "guildhall" || currentFlag == "magicshop" || currentFlag == "oretrader" 
 							|| currentFlag == "tavern" || currentFlag == "townhall" || currentFlag == "treasury" )
 						{
-							int buildingLevel = 0;
-							buildingLevel = parseInt(customClass.m_flags[j+1]);
-							requiredFlags = IsBuildingLevel(currentFlag, buildingLevel);
-							j++;
+							requiredFlags = IsBuildingLevel(parseFlag[0], parseFlag[1]);
 						}
-						else {
+						else if (parseFlag[0] == "dlc")
+						{
+							requiredFlags = Platform::HasDLC(parseFlag[1]);
+						}
+						else 
+						{
 							requiredFlags = IsFlagSet(currentFlag);
 						}
-						requiredFlags = Platform::HasDLC(Resources::GetString(currentFlag));
 					}
 				}
-				
-				
 				
 				//Unlock Class
 				if (customClass.m_orePrice == 0 || IsFlagSet(customClass.m_name + "_unlocked"))
@@ -156,15 +156,16 @@ namespace ClassChanger
 			return g_flags.Get(id) != FlagState::Off;
 		}
 
-		bool IsBuildingLevel(string id, int level)
+		bool IsBuildingLevel(string id, string level)
 		{
 			auto gm = cast<MainMenu>(g_gameMode);
-
+			int buildingLevel = parseInt(level);
+			print(level + " " + id);
 			auto building = gm.m_town.GetBuilding(id);
 			if (building is null)
 				return false;
 
-			return (building.m_level >= level);
+			return (building.m_level >= buildingLevel);
 		}
 
 		void ClassChange(string newClass)
@@ -215,6 +216,8 @@ namespace ClassChanger
 				SetFlag(parse[1] + "_unlocked", FlagState::Town);
 				int unlockCost = GetOrePrice(parse[1]);
 				Currency::Spend(0, unlockCost);
+				ReloadList();
+				m_shopMenu.DoLayout();
 			}
 			else if (parse[0] == "train")
 			{
@@ -244,9 +247,6 @@ namespace ClassChanger
 			}
 			else
 			ShopMenuContent::OnFunc(sender, name);
-			
-			ReloadList();
-			m_shopMenu.DoLayout();
 		}
 	}
 }
