@@ -30,10 +30,10 @@ namespace ClassChanger
 
 			for (uint i = 0; i < g_classes.length(); i++)
 			{
-				auto customClass = g_classes[i];
+				ClassEntry@ customClass = g_classes[i];
 				bool classUnlocked = false;
 				bool requiredFlags = true;
-				Widget@ wNewClass = null;
+				Widget@ wNewClass;
 
 				if (customClass.m_name != "")
 					wNewClass.m_tooltipText = customClass.m_name;
@@ -64,10 +64,10 @@ namespace ClassChanger
 				//Unlock Class
 				
 				auto wButtonUnlock = cast<ScalableSpriteButtonWidget>(wNewClass.GetWidgetById("button-unlock"));
-				if (wButtonUnlock !is null && customClass.m_price > 0)
+				if (wButtonUnlock !is null && customClass.m_orePrice > 0)
 				{
 					int oreCost = 0;
-					oreCost = customClass.m_price;
+					oreCost = customClass.m_orePrice;
 					wButtonUnlock.SetText(Resources::GetString("Unlock"));
 					wButtonUnlock.m_tooltipText = Resources::GetString("ore");
 					wButtonUnlock.AddTooltipSub(m_spriteOre, oreCost);
@@ -111,6 +111,9 @@ namespace ClassChanger
 			DungeonNgpList ngps;
 			int ngp = 0;
 			ngp = int(max(max(ngps["base"],ngps["pop"]),ngps["mt"]));
+			if (IsFlagSet("class_change_debug"))
+				return 0;
+				
 			return int(record.level * (1000 +(ngp * 250)));
 		}
 

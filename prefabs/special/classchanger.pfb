@@ -4,11 +4,11 @@
 	</dict>
 	<int name="version">1</int>
 	<dict name="units">
-		<array name="doodads/generic/npc_librarian.unit"><vec2>0 0</vec2><int>2</int></array>
+		<array name="doodads/generic/npc_librarian.unit"><vec2>0 0</vec2><int>1</int></array>
 		<array name=":Physics_Circle">
 			<array>
 				<vec2>0 0</vec2>
-				<int>4</int>
+				<int>2</int>
 				<dict>
 					<bool name="active">t</bool>
 					<float name="radius">18</float>
@@ -29,9 +29,9 @@
 			<int>-1</int>
 			<bool>f</bool>
 			<dict>
-				<array name="Areas"><int>4</int></array>
+				<array name="Areas"><int>2</int></array>
 				<int name="Type">11</int>
-				<string name="Category">ClassChangerMenuContent</string>
+				<string name="Category">ClassChanger::ClassChangerMenuContent</string>
 			</dict>
 		</array>
 	</array>

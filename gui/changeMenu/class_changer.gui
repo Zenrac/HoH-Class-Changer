@@ -83,7 +83,7 @@
 				<!-- List container -->
 				<rect offset="2 23" width="396" height="158" color="#202a26FF" shadow="#0c120fFF" shadowsize="2">
 					<!-- List -->
-					<checkboxgroup id="list" flow="vbox" spacing="3" func="char-changed" func-double="play" dynamic-size="false" width="382" height="158" autoscroll="true" clipping="true" />
+					<checkboxgroup id="list" flow="vbox" spacing="3" dynamic-size="false" width="382" height="158" clipping="true" />
 
 					<!-- Scrollbar -->
 					<scrollbar forid="list" spriteset="scrollbar" outside="true" offset="3 0" buttons-size="14" trough-offset="18" handle-border="2" />
