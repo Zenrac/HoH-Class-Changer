@@ -33,12 +33,24 @@ namespace ClassChanger
 				ClassEntry@ customClass = g_classes[i];
 				bool classUnlocked = false;
 				bool requiredFlags = true;
-				Widget@ wNewClass;
+				Widget@ wNewClass = null;
+				
+				
+				//Template Widget
+				wNewClass = cast<RectWidget>(m_wTemplate.Clone());
+				
+				//Portrait Widget
 
+
+				//Name Widget
+				/*
 				if (customClass.m_name != "")
 					wNewClass.m_tooltipText = customClass.m_name;
 				else
 					wNewClass.m_tooltipText = "Undefined Class";
+				*/
+				print(customClass.m_name);
+
 				//Check Flags
 				if (customClass.m_flags !is null)
 				{
@@ -60,6 +72,8 @@ namespace ClassChanger
 						requiredFlags = Platform::HasDLC(Resources::GetString(currentFlag));
 					}
 				}
+				
+				
 				
 				//Unlock Class
 				
@@ -144,7 +158,7 @@ namespace ClassChanger
 		
 		string GetGuiFilename() override
 		{
-			return "gui/class_changer.gui";
+			return "gui/changeMenu/class_changer.gui";
 		}
 
 		void OnFunc(Widget@ sender, string name) override
