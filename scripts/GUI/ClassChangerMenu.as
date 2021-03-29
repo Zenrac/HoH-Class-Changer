@@ -1,3 +1,4 @@
+
 namespace ClassChanger
 {
 	class ClassChangerMenuContent : ShopMenuContent
@@ -80,12 +81,20 @@ namespace ClassChanger
 					for (uint j = 0; j < customClass.m_flags.length(); j++){
 						auto flag = customClass.m_flags[j];
 						auto parseFlag = flag.split(",");
-						print(customClass.m_name + " Class has requirements: " + flag);
-						if (parseFlag[0] == "apothecary" || parseFlag[0] == "blacksmith" || parseFlag[0] == "chapel" || parseFlag[0] == "fountain" 
-							|| parseFlag[0] == "generalstore" || parseFlag[0] == "guildhall" || parseFlag[0] == "magicshop" || parseFlag[0] == "oretrader" 
-							|| parseFlag[0] == "tavern" || parseFlag[0] == "townhall" || parseFlag[0] == "treasury" )
+						//print(customClass.m_name + " Class has requirements: " + flag);
+						if(parseFlag[0] == "apothecary" 
+						|| parseFlag[0] == "blacksmith" 
+						|| parseFlag[0] == "chapel" 
+						|| parseFlag[0] == "fountain" 
+						|| parseFlag[0] == "generalstore" 
+						|| parseFlag[0] == "guildhall" 
+						|| parseFlag[0] == "magicshop" 
+						|| parseFlag[0] == "oretrader" 
+						|| parseFlag[0] == "tavern" 
+						|| parseFlag[0] == "townhall" 
+						|| parseFlag[0] == "treasury" )
 						{
-							print(customClass.m_name + " needs level " + parseFlag[1] + " " + parseFlag[0]);
+							//print(customClass.m_name + " needs level " + parseFlag[1] + " " + parseFlag[0]);
 							requiredFlags = IsBuildingLevel(parseFlag[0], parseFlag[1]);
 						}
 						else if (parseFlag[0] == "dlc")
@@ -171,7 +180,6 @@ namespace ClassChanger
 		{
 			auto gm = cast<Campaign>(g_gameMode);
 			int buildingLevel = parseInt(level);
-			print(level + " " + id);
 			TownBuilding@ building = gm.m_town.GetBuilding(id);
 			if (building is null)
 				return false;
@@ -248,7 +256,7 @@ namespace ClassChanger
 				return;
 
 			//for (uint i = 0; i < parse.length(); i++){ print(parse[i] + " "); }
-			print(name);
+			//print(name);
 			if (parse[0] == "unlock")
 			{
 				SetFlag(parse[1] + "_unlocked", FlagState::Town);
@@ -267,7 +275,7 @@ namespace ClassChanger
 							return;
 						}
 						Currency::Spend(GetPrice());
-						print("Now Changing to " + parse[1] + " class...");
+						//print("Now Changing to " + parse[1] + " class...");
 						ReloadList();
 						ClassChange(parse[1]);
 						ShopMenuContent::OnFunc(sender, "close");

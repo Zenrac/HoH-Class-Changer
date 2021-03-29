@@ -22,33 +22,6 @@ namespace ClassChanger
 		}
 	}
 
-	string GetModClassName(string id) {
-		auto enabledMods = HwrSaves::GetEnabledMods();
-		for (uint i = 0; i < enabledMods.length(); i++)
-		{
-			auto mod = enabledMods[i];
-			auto sval = mod.Data;
-
-			auto arrCustomClasses = GetParamArray(UnitPtr(), sval, "custom-character-classes", false);
-			if (arrCustomClasses !is null)
-			{
-				for (uint j = 0; j < arrCustomClasses.length(); j++)
-				{
-					auto charClass = arrCustomClasses[j];
-					if (charClass.GetType() == SValueType::Dictionary)
-					{
-						string classId = GetParamString(UnitPtr(), charClass, "id");
-						if (classId == id)
-							return GetParamString(UnitPtr(), charClass, "name");
-					}
-					else if (charClass.GetType() == SValueType::String && charClass.GetString() == id)
-						return id;
-				}
-			}
-		}
-		return id;
-	}
-
 	int GetOrePrice(string classID)
 	{
 		int oreCost = 0;
