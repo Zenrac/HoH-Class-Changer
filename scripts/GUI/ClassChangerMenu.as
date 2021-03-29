@@ -23,6 +23,11 @@ namespace ClassChanger
 
 			ReloadList();
 		}
+
+		string GetTitle() override
+		{
+			return Resources::GetString(".mod.classchanger.menu.title");
+		}
 		
 		void ReloadList() override
 		{
@@ -30,9 +35,8 @@ namespace ClassChanger
 			m_wList.ClearChildren();
 
 			auto gm = cast<Campaign>(g_gameMode);
-			auto town = gm.m_townLocal;
-
 			auto record = GetLocalPlayerRecord();
+			auto town = gm.m_townLocal;
 
 			for (uint i = 0; i < g_classes.length(); i++)
 			{
@@ -42,15 +46,15 @@ namespace ClassChanger
 
 				//Template Widget
 				auto wNewClass = m_wTemplate.Clone();
-				wNewClass.SetID("");
+				wNewClass.SetID(customClass.m_id + "-tab");
 				wNewClass.m_visible = true;
 				
 				//Portrait Widget
 				auto wPortrait = cast<PortraitWidget>(wNewClass.GetWidgetById("portrait"));
-				auto portraitData = GetLocalPlayerRecord();
 				if (wPortrait !is null)
-					wPortrait.BindRecord(portraitData);
 					wPortrait.SetClass(customClass.m_id);
+					wPortrait.SetDyes(record.colors);
+					wPortrait.UpdatePortrait();
 
 				//Name Widget
 				auto wNameContainer = cast<RectWidget>(wNewClass.GetWidgetById("name-container"));
@@ -59,9 +63,10 @@ namespace ClassChanger
 					auto wName = cast<TextWidget>(wNameContainer.GetWidgetById("name"));
 					if (wName !is null)
 					{	
+						auto className = customClass.m_name;
 						//print(customClass.m_name);
-						if (customClass.m_name != "")
-							wName.SetText(customClass.m_name);
+						if (className != "")
+							wName.SetText(className);
 						else
 							wName.SetText("Undefined Class");
 						
@@ -73,13 +78,14 @@ namespace ClassChanger
 				{
 					requiredFlags = false;
 					for (uint j = 0; j < customClass.m_flags.length(); j++){
-						auto currentFlag = customClass.m_flags[j];
-						auto parseFlag = currentFlag.split(",");
-						print(currentFlag);
-						if (parseFlag[0] == "apothecary" || currentFlag == "blacksmith" || currentFlag == "chapel" || currentFlag == "fountain" 
-							|| currentFlag == "generalstore" || currentFlag == "guildhall" || currentFlag == "magicshop" || currentFlag == "oretrader" 
-							|| currentFlag == "tavern" || currentFlag == "townhall" || currentFlag == "treasury" )
+						auto flag = customClass.m_flags[j];
+						auto parseFlag = flag.split(",");
+						print(customClass.m_name + " Class has requirements: " + flag);
+						if (parseFlag[0] == "apothecary" || parseFlag[0] == "blacksmith" || parseFlag[0] == "chapel" || parseFlag[0] == "fountain" 
+							|| parseFlag[0] == "generalstore" || parseFlag[0] == "guildhall" || parseFlag[0] == "magicshop" || parseFlag[0] == "oretrader" 
+							|| parseFlag[0] == "tavern" || parseFlag[0] == "townhall" || parseFlag[0] == "treasury" )
 						{
+							print(customClass.m_name + " needs level " + parseFlag[1] + " " + parseFlag[0]);
 							requiredFlags = IsBuildingLevel(parseFlag[0], parseFlag[1]);
 						}
 						else if (parseFlag[0] == "dlc")
@@ -88,25 +94,28 @@ namespace ClassChanger
 						}
 						else 
 						{
-							requiredFlags = IsFlagSet(currentFlag);
+							requiredFlags = IsFlagSet(flag);
 						}
 					}
 				}
 				
 				//Unlock Class
-				if (customClass.m_orePrice == 0 || IsFlagSet(customClass.m_name + "_unlocked"))
+				//print("Required flags met for " + customClass.m_name + ": " + requiredFlags);
+				//print(customClass.m_name + "Class unlocked: " + IsFlagSet(customClass.m_id + "_unlocked"));
+				
+				int unlockCost = GetOrePrice(customClass.m_id);
+				if (unlockCost == 0 || IsFlagSet(customClass.m_id + "_unlocked"))
 					classUnlocked = true;
 				
 				auto wButtonUnlock = cast<ScalableSpriteButtonWidget>(wNewClass.GetWidgetById("button-unlock"));
 				if (wButtonUnlock !is null)
 				{
-					int unlockCost = GetOrePrice(customClass.m_id);
+					
 					wButtonUnlock.m_tooltipTitle = Resources::GetString(".mod.classchanger.menu.unlock");
 					wButtonUnlock.m_tooltipText = Resources::GetString(".mod.classchanger.menu.unlock.desc");
 					wButtonUnlock.AddTooltipSub(m_spriteOre, formatThousands(unlockCost));
 					
-					wButtonUnlock.m_enabled = Currency::CanAfford( 0, unlockCost);
-					if (requiredFlags == false || customClass.m_orePrice > 0)
+					if (!Currency::CanAfford(0, unlockCost) || requiredFlags == false || classUnlocked == true)
 						wButtonUnlock.m_enabled = false;
 					else
 						wButtonUnlock.m_func = "unlock " + customClass.m_id;
@@ -121,7 +130,7 @@ namespace ClassChanger
 					wButtonBuy.m_tooltipText = Resources::GetString(".mod.classchanger.menu.buy.desc");
 					wButtonBuy.AddTooltipSub(m_spriteGold, formatThousands(trainCost));
 
-					if (!Currency::CanAfford(trainCost) || classUnlocked == true)
+					if (!Currency::CanAfford(trainCost) || classUnlocked == false)
 						wButtonBuy.m_enabled = false;
 					else
 						wButtonBuy.m_func = "train " + customClass.m_id;
@@ -142,8 +151,10 @@ namespace ClassChanger
 			ngp = int(max(max(ngps["base"],ngps["pop"]),ngps["mt"]));
 			if (IsFlagSet("class_change_debug"))
 				return 0;
+
+			int respecCost = 250 * GetRespecSkillPoints();
 				
-			return int(record.level * (1000 +(ngp * 250)));
+			return int(record.level * (1000 + (ngp * 50))) + respecCost;
 		}
 
 		void SetFlag(string id, FlagState flag)
@@ -158,14 +169,43 @@ namespace ClassChanger
 
 		bool IsBuildingLevel(string id, string level)
 		{
-			auto gm = cast<MainMenu>(g_gameMode);
+			auto gm = cast<Campaign>(g_gameMode);
 			int buildingLevel = parseInt(level);
 			print(level + " " + id);
-			auto building = gm.m_town.GetBuilding(id);
+			TownBuilding@ building = gm.m_town.GetBuilding(id);
 			if (building is null)
 				return false;
 
 			return (building.m_level >= buildingLevel);
+		}
+		
+		int GetRespecSkillPoints()
+		{
+			auto record = GetLocalPlayerRecord();
+			int attunePointsWorth = 0;
+
+			// Attuned items
+			for (uint i = 0; i < record.itemForgeAttuned.length(); i++)
+			{
+				auto item = g_items.GetItem(record.itemForgeAttuned[i]);
+				if (item is null)
+				{
+					PrintError("Couldn't find attuned item with ID " + record.itemForgeAttuned[i]);
+					continue;
+				}
+
+				attunePointsWorth += GetItemAttuneCost(item);
+			}
+
+			// Attuned enemies
+			for (uint i = 0; i < record.bestiaryAttunements.length(); i++)
+			{
+				auto entry = record.bestiaryAttunements[i];
+				for (int j = 1; j <= entry.m_attuned; j++)
+					attunePointsWorth += entry.GetAttuneCost(j);
+			}
+
+			return record.GetSpentSkillpoints() - attunePointsWorth;
 		}
 
 		void ClassChange(string newClass)
@@ -207,10 +247,8 @@ namespace ClassChanger
 			if (player is null)
 				return;
 
-			for (uint i = 0; i < parse.length(); i++){
-				print(parse[i] + " ");
-			}
-
+			//for (uint i = 0; i < parse.length(); i++){ print(parse[i] + " "); }
+			print(name);
 			if (parse[0] == "unlock")
 			{
 				SetFlag(parse[1] + "_unlocked", FlagState::Town);
@@ -229,13 +267,15 @@ namespace ClassChanger
 							return;
 						}
 						Currency::Spend(GetPrice());
-						//print();
-						//ClassChange(parse[1]);
+						print("Now Changing to " + parse[1] + " class...");
+						ReloadList();
+						ClassChange(parse[1]);
+						ShopMenuContent::OnFunc(sender, "close");
 				}
 				else if (parse.length() == 2)
 				{
 					g_gameMode.ShowDialog(
-						"train-class",
+						"train " + parse[1],
 						Resources::GetString(".mod.classchanger.menu.prompt", {
 							{ "gold", formatThousands(GetPrice()) }
 						}),
