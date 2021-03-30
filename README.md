@@ -24,7 +24,9 @@ the contents will need to include:
   </dict>
 </array>
 ```
-"building_name" has support for:
+"**class_id**" is where you put the name of the class's folder.
+
+"**building_name**" has support for:
   - apothecary, 
   - blacksmith,
   - chapel,
@@ -37,12 +39,12 @@ the contents will need to include:
   - townhall,
   - treasury,
   
-"dlc_abreviation" has support for:
+"**dlc_abreviation**" has support for:
  - pop
  - wh
  - mt
  
-"town_flag" has support for:
+"**town_flag**" has support for:
  - ANY TOWN FLAG (There are too many to list)
   
 ### EXAMPLE:
