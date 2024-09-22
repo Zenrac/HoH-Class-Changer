@@ -3,66 +3,55 @@
 	<dict>
 		<string name="class-id">paladin</string>
 		<string name="name">Paladin</string>
-		<int name="ore-price">20</int>
+		<int name="ore-price">0</int>
 		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">ranger</string>
 		<string name="name">Ranger</string>
-		<int name="ore-price">20</int>
+		<int name="ore-price">0</int>
 		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">sorcerer</string>
 		<string name="name">Sorcerer</string>
-		<int name="ore-price">20</int>
+		<int name="ore-price">0</int>
 		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">warlock</string>
 		<string name="name">Warlock</string>
-		<int name="ore-price">20</int>
+		<int name="ore-price">0</int>
 		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">thief</string>
 		<string name="name">Thief</string>
-		<int name="ore-price">20</int>
-		<array name="flags">
-			<string>tavern,1</string>
-		</array>
+		<int name="ore-price">0</int>
+		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">priest</string>
 		<string name="name">Priest</string>
-		<int name="ore-price">20</int>
-		<array name="flags">
-			<string>chapel,1</string>
-		</array>
+		<int name="ore-price">0</int>
+		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">wizard</string>
 		<string name="name">Wizard</string>
-		<int name="ore-price">20</int>
-		<array name="flags">
-			<string>magicshop,1</string>
-		</array>
+		<int name="ore-price">0</int>
+		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">gladiator</string>
 		<string name="name">Gladiator</string>
-		<int name="ore-price">20</int>
-		<array name="flags">
-			<string>unlock_gladiator</string>
-			<string>dlc,pop</string>
-		</array>
+		<int name="ore-price">0</int>
+		<array name="flags"></array>
 	</dict>
 	<dict>
 		<string name="class-id">witch_hunter</string>
 		<string name="name">Witch Hunter</string>
-		<int name="ore-price">20</int>
-		<array name="flags">
-			<string>dlc,wh</string>
-		</array>
+		<int name="ore-price">0</int>
+		<array name="flags"></array>
 	</dict>
 </array>
